@@ -85,6 +85,7 @@ if (isset($_GET['search'])) {
         <a href="grooming.php" class="navbar-item">Grooming</a>
         <a href="purchase.php" class="navbar-item navbar-on">Purchase</a>
         <a href="membership.php" class="navbar-item">Membership</a>
+        <a href="debug.php" class="navbar-debug">Debug</a>
       </div>
       <a href="logout.php" class="navbar-item">Logout</a>
     </div>

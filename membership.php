@@ -106,6 +106,7 @@ function handleExtendMember($id_extend, $link_extend) {
         <a href="grooming.php" class="navbar-item">Grooming</a>
         <a href="purchase.php" class="navbar-item">Purchase</a>
         <a href="membership.php" class="navbar-item navbar-on">Membership</a>
+        <a href="debug.php" class="navbar-debug">Debug</a>
       </div>
       <a href="logout.php" class="navbar-item">Logout</a>
     </div>

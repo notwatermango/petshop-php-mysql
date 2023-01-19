@@ -138,7 +138,6 @@ function handlePayGrooming($id_pay, $link_pay) {
   <link rel="stylesheet" href="./css/navbar.css">
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/grooming.css">
-  
   <title>Grooming</title>
 </head>
 <body>
@@ -146,95 +145,19 @@ function handlePayGrooming($id_pay, $link_pay) {
     <div class="navbar-row">
       <div class="navbar-left">
         <a href="dashboard.php" class="navbar-item">Dashboard</a>
-        <a href="grooming.php" class="navbar-item navbar-on">Grooming</a>
+        <a href="grooming.php" class="navbar-item">Grooming</a>
         <a href="purchase.php" class="navbar-item">Purchase</a>
         <a href="membership.php" class="navbar-item">Membership</a>
-        <a href="debug.php" class="navbar-debug">Debug</a>
+        <a href="debug.php" class="navbar-debug navbar-on">Debug</a>
 
       </div>
       <a href="logout.php" class="navbar-item">Logout</a>
     </div>
   </div>
-  <div class="flex">
-    <div class="flex-20 padding-10px center-child-horizontal">
-      <div class="container-new-form">
-        <?php echo $submit_result; ?>
-        <?php echo $error; ?>
-        <form action="grooming.php" method ="post">
-          <h2>new grooming</h2>
-          <label>member_id</label>
-          <input class="block" type="number" name="member_id" maxlength="50" placeholder="10">
-          <label>price</label>
-          <input class="block" type="number" name="price" maxlength="50" placeholder="25000">
-          <label>time</label>
-          <input class="block" type="time" name="time" value="10:00">
-          <label>date</label>
-          <input class="block" type="date" name="date" value="<?php echo date('Y-m-d'); ?>">
-          <input type="submit" name="newGroomingSubmit" value="submit">
-        </form>
-      </div>
-    </div>
-    <div class="flex-40">
-      <h2>unpaid bookings</h2>
-      <ul>
-        <?php
-        if (mysqli_num_rows($result_unpaid_groomings)) {
-          $sn = 1;
-          while ($data = mysqli_fetch_assoc($result_unpaid_groomings)) {
-            ?>
-              <li class="flex-col">
-                <div class="flex-row justify-between">
-                  <div>(ID: <?php echo $data['groom_id']; ?>)
-                    <b><?php echo $data['name']; ?></b> - <?php echo $data['type']; ?> 
-                  </div>
-                  <div>  
-                    <form method="post" style="display:inline;">
-                      <input class="delete-button" type="submit" name="deleteGrooming" value=<?php echo $data['groom_id']?>>
-                    </form>
-                    <form method="post" style="display:inline;">
-                      <input class="pay-button" type="submit" name="payGrooming" value=<?php echo $data['groom_id']?>>
-                    </form>
-                  </div>
-                </div>
-                <div>IDR <?php echo $data['price']; ?> | <?php echo $data['date']; ?> </div>
-              </li>  
-            <?php $sn++;
-          }
-        } else { ?>
-            <tr>
-              <div colspan="8">no data found</div>
-            </tr>
-        <?php } ?>
-      </ul>
-    </div>
-    <div class="flex-40">
-      <h2>paid bookings</h2>
-      <ul>
-        <?php
-        if (mysqli_num_rows($result_paid_groomings)) {
-          $sn = 1;
-          while ($data = mysqli_fetch_assoc($result_paid_groomings)) {
-            ?>
-              <li class="flex-col">
-                <div class="flex-row justify-between">
-                  <div>(ID: <?php echo $data['groom_id']; ?>)
-                    <b><?php echo $data['name']; ?></b> - <?php echo $data['type']; ?> 
-                  </div>
-                  <form method="post" style="display:inline;">
-                    <input class="delete-button" type="submit" name="deleteGrooming" value=<?php echo $data['groom_id']?>>
-                  </form>
-                </div>
-                <div>IDR <?php echo $data['price']; ?> | <?php echo $data['date']; ?> </div>
-              </li>  
-            <?php $sn++;
-          }
-        } else { ?>
-            <tr>
-              <div colspan="8">no data found</div>
-            </tr>
-        <?php } ?>
-      </ul>
-    </div>
+  <div>
+    <form>
+      
+    </form>
   </div>
 </body>
 

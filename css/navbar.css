@@ -30,8 +30,24 @@
   cursor: default;
 }
 
+.navbar-debug {
+  display: inline;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  text-align: center;
+  text-decoration: none; 
+  color: rgb(119, 4, 56);
+  cursor: default;
+}
+
 .navbar-item:hover {
   color: blueviolet;
+  cursor: pointer;
+}
+
+.navbar-debug:hover {
+  color: rgb(41, 2, 77);
   cursor: pointer;
 }
 
