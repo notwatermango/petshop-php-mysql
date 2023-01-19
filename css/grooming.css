@@ -1,0 +1,49 @@
+.container-new-form {
+  border: solid 1px black;
+  padding: 0 2rem 2rem 2rem;
+}
+
+
+h2 {
+  text-align: center;
+}
+
+.block {
+  display: block;
+}
+
+form {
+  display:inline; 
+  margin:0px;
+  padding:0px;
+}
+
+.delete-button {
+  padding:5px 15px; 
+  font-size: 14px;
+  border:none;
+  background: rgb(116, 6, 6);
+  color: rgb(116, 6, 6);
+  width:auto;
+  height:auto;
+  outline: none;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; 
+}
+
+.pay-button {
+  padding:5px 15px; 
+  font-size: 14px;
+  border:none;
+  background: rgb(6, 116, 17);
+  color: rgb(6, 116, 17);
+  width:auto;
+  height:auto;
+  outline: none;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; 
+}
