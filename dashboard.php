@@ -65,7 +65,7 @@ $error = "";
 <body>
   <div class="navbar-container">
     <div class="navbar-row">
-      <div class="navbar-left">
+      <div class="navbar-left cg-10px">
         <a href="dashboard.php" class="navbar-item navbar-on">Dashboard</a>
         <a href="grooming.php" class="navbar-item">Grooming</a>
         <a href="purchase.php" class="navbar-item">Purchase</a>

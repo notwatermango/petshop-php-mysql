@@ -116,12 +116,12 @@ if (array_key_exists("resetData", $_POST)) {
   <link rel="stylesheet" href="./css/navbar.css">
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/grooming.css">
-  <title>Grooming</title>
+  <title>Debug</title>
 </head>
 <body>
   <div class="navbar-container">
-    <div class="navbar-row">
-      <div class="navbar-left">
+    <div class="navbar-row cg-10px">
+    <div class="navbar-left cg-10px">
         <a href="dashboard.php" class="navbar-item">Dashboard</a>
         <a href="grooming.php" class="navbar-item">Grooming</a>
         <a href="purchase.php" class="navbar-item">Purchase</a>
