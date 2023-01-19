@@ -66,7 +66,7 @@ if ($new_submit === "submit") {
   $price = (empty(trim($_POST["price"])) ? "" : trim($_POST["price"]));
   $error = (empty(trim($_POST["price"])) ? "price cannot be empty" : "");
   // payment status
-  $paid = (isset($_POST["paid"]) ? "false" : trim($_POST["paid"]));
+  $paid = (empty($_POST["paid"]) ? "false" : trim($_POST["paid"]));
 
   // all valid
   if (empty($error)) {
@@ -179,15 +179,19 @@ function handlePayGrooming($id_pay, $link_pay) {
           $sn = 1;
           while ($data = mysqli_fetch_assoc($result_unpaid_groomings)) {
             ?>
-              <li>
-                <div>(ID: <?php echo $data['groom_id']; ?>)
-                  <b><?php echo $data['name']; ?></b> - <?php echo $data['type']; ?> 
-                  <form method="post" style="display:inline;">
-                    <input class="delete-button" type="submit" name="deleteGrooming" value=<?php echo $data['groom_id']?>>
-                  </form>
-                  <form method="post" style="display:inline;">
-                    <input class="pay-button" type="submit" name="payGrooming" value=<?php echo $data['groom_id']?>>
-                  </form>
+              <li class="flex-col">
+                <div class="flex-row justify-between">
+                  <div>(ID: <?php echo $data['groom_id']; ?>)
+                    <b><?php echo $data['name']; ?></b> - <?php echo $data['type']; ?> 
+                  </div>
+                  <div>  
+                    <form method="post" style="display:inline;">
+                      <input class="delete-button" type="submit" name="deleteGrooming" value=<?php echo $data['groom_id']?>>
+                    </form>
+                    <form method="post" style="display:inline;">
+                      <input class="pay-button" type="submit" name="payGrooming" value=<?php echo $data['groom_id']?>>
+                    </form>
+                  </div>
                 </div>
                 <div>IDR <?php echo $data['price']; ?> | <?php echo $data['date']; ?> </div>
               </li>  
@@ -208,9 +212,11 @@ function handlePayGrooming($id_pay, $link_pay) {
           $sn = 1;
           while ($data = mysqli_fetch_assoc($result_paid_groomings)) {
             ?>
-              <li>
-                <div>(ID: <?php echo $data['groom_id']; ?>)
-                  <b><?php echo $data['name']; ?></b> - <?php echo $data['type']; ?> 
+              <li class="flex-col">
+                <div class="flex-row justify-between">
+                  <div>(ID: <?php echo $data['groom_id']; ?>)
+                    <b><?php echo $data['name']; ?></b> - <?php echo $data['type']; ?> 
+                  </div>
                   <form method="post" style="display:inline;">
                     <input class="delete-button" type="submit" name="deleteGrooming" value=<?php echo $data['groom_id']?>>
                   </form>

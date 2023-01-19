@@ -74,11 +74,10 @@ $error = "";
     </div>
   </div>
   <div class="flex">
-
-    <div class="flex-40 padding-10px center-child-horizontal flex-col">
-      <?php echo $error; ?>
+    <?php echo $error; ?>
+    <div class="flex-40">
       <h2>purchases history</h2>
-      <div class="container-items flex-col">
+      <div class="container-items flex-col overflow-auto h-100">
         <ul>
           <?php
           if (mysqli_num_rows($result_purchases_history)) {
@@ -103,34 +102,36 @@ $error = "";
     </div>
     <div class="flex-40">
       <h2>today's groomings</h2>
-      <ul>
-        <?php
-        if (mysqli_num_rows($result_today_groomings)) {
-          $sn = 1;
-          while ($data = mysqli_fetch_assoc($result_today_groomings)) {
-            ?>
-              <li>
-                <div>scheduled at <?php echo $data['time']; ?></div>
-                <div>(ID: <?php echo $data['groom_id']; ?>)
-                  <b><?php echo $data['name']; ?></b> - <?php echo $data['type']; ?> 
-                </div>
-                <?php
-                  if ($data['is_paid'] == true) {
-                    echo "<div>paid</div>";
-                  } else {
-                    echo "<div><b>unpaid IDR ".$data['price']."</b></div>";
-                  }
-                  echo "<div>phone (+62) ".$data['mobile']."</div>"
-                ?>
-              </li>  
-            <?php $sn++;
-          }
-        } else { ?>
-            <tr>
-              <div colspan="8">no data found</div>
-            </tr>
-        <?php } ?>
-      </ul>
+      <div class="container-items flex-col overflow-auto h-100">
+        <ul>
+          <?php
+          if (mysqli_num_rows($result_today_groomings)) {
+            $sn = 1;
+            while ($data = mysqli_fetch_assoc($result_today_groomings)) {
+              ?>
+                <li>
+                  <div>scheduled at <?php echo $data['time']; ?></div>
+                  <div>(ID: <?php echo $data['groom_id']; ?>)
+                    <b><?php echo $data['name']; ?></b> - <?php echo $data['type']; ?> 
+                  </div>
+                  <?php
+                    if ($data['is_paid'] == true) {
+                      echo "<div>paid</div>";
+                    } else {
+                      echo "<div><b>unpaid IDR ".$data['price']."</b></div>";
+                    }
+                    echo "<div>phone (+62) ".$data['mobile']."</div>"
+                  ?>
+                </li>  
+              <?php $sn++;
+            }
+          } else { ?>
+              <tr>
+                <div colspan="8">no data found</div>
+              </tr>
+          <?php } ?>
+        </ul>
+      </div>
     </div>
   </div>
 </body>
