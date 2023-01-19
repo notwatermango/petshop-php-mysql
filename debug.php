@@ -9,123 +9,101 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] != true) {
 
 require_once 'config/config.php';
 
-// GET groomings
-$query_unpaid_groomings = "
-  select
-    g.id groom_id,
-    m.id member_id, 
-    m.name as name,
-    m.type as type,
-    m.gender as gender,
-    m.owner_mobile as mobile,
-    g.groom_date as date,
-    g.groom_time as time,
-    g.price
-  from groomings g
-  join members m
-    on g.member_id = m.id
-  where is_paid = false
-  order by date asc, time asc;
-";
-$query_paid_groomings = "
-  select
-    g.id groom_id,
-    m.id member_id, 
-    m.name as name,
-    m.type as type,
-    m.gender as gender,
-    m.owner_mobile as mobile,
-    g.groom_date as date,
-    g.groom_time as time,
-    g.price
-  from groomings g
-  join members m
-    on g.member_id = m.id
-  where is_paid = true
-  order by date asc, time asc;
-";
-
-$result_unpaid_groomings = mysqli_query($link, $query_unpaid_groomings);
-$result_paid_groomings = mysqli_query($link, $query_paid_groomings);
 
 
-$new_submit = isset($_POST["newGroomingSubmit"]) ? $_POST["newGroomingSubmit"] : '';
 $submit_result = "";
 $error = "";
 
-if ($new_submit === "submit") {
-  $member_id = $date = $time = $price = $paid =  "";
+// handle populate data
+if (array_key_exists("populateData", $_POST)) {
+  $submit_result = handlePopulateDate($link);
+}
 
-  // check all
-  $member_id = (empty(trim($_POST["member_id"])) ? "" : trim($_POST["member_id"]));
-  $error = (empty(trim($_POST["member_id"])) ? "member_id cannot be empty" : "");
-  $date = (empty(trim($_POST["date"])) ? "" : trim($_POST["date"]));
-  $error = (empty(trim($_POST["date"])) ? "date cannot be empty" : "");
-  $time = (empty(trim($_POST["time"])) ? "" : trim($_POST["time"]));
-  $error = (empty(trim($_POST["time"])) ? "time cannot be empty" : "");
-  $price = (empty(trim($_POST["price"])) ? "" : trim($_POST["price"]));
-  $error = (empty(trim($_POST["price"])) ? "price cannot be empty" : "");
-  // payment status
-  $paid = (empty($_POST["paid"]) ? "false" : trim($_POST["paid"]));
-
-  // all valid
-  if (empty($error)) {
-    // check member_id
-    $query_member_id_check = "select id from members where id = ".$member_id." and expired_at >= now();";
-    if ($result_member_id_check = mysqli_query($link, $query_member_id_check)) {
-      if (mysqli_num_rows($result_member_id_check)) {
-        $query_new_grooming = "insert into groomings value ("
-          . "default,\""
-          . $member_id . "\","
-          . "default,\""
-          . $date . "\",\""
-          . $time . "\",\""
-          . $price . "\","
-          . $paid . ");";
-        if (mysqli_query($link, $query_new_grooming)) {
-          $submit_result = "Success adding groom for " . $member_id;
-          header("location: grooming.php");
-        } else {
-          $submit_result = "An error occured.";
-        }
-      } else {
-        // invalid id or inactive
-        $submit_result = "please enter correct id and make sure membership is active"; 
-      }
-    }
+function handlePopulateDate($link_populate) {
+  $query_populate_items = "
+    insert into items values
+    (default, \"Maine Coon Purr 1kg\", \"Makanan kucing untuk Maine Coon\",\"75000\",30),
+    (default, \"Dogge Steer Chews 2 pack\", \"Treat untuk doggy \",\"27000\",15),
+    (default, \"Whoops no Flee Shampoo\", \"Shampoo anti kutu 250ml\",\"48500\",40),
+    (default, \"Catnip UwU\", \"Catnip untuk menenangkan kucing\",\"17500\",9),
+    (default, \"Adored Meow Vitamin 200ml\", \"Vitamin untuk kucing\",\"80000\",10),
+    (default, \"Porcupine squicky toy\", \"Mainan berbunyi saat dipencet\",\"15000\",27),
+    (default, \"Cat Dog Brush\", \"Sisir untuk doggy dan kucing\",\"24000\",15),
+    (default, \"Bone Chew Toy\", \"Mainan bentuk tulang untuk doggy\",\"13500\",33),
+    (default, \"Meow meow Bed\", \"Kasur untuk kucing\",\"100000\",22),
+    (default, \"Big Dogge Pillow\", \"Bantal besar untuk tidur doggy\",\"100000\",30),
+    (default, \"Mouse on Rod\", \"Makanan kucing dengan model pancingan\",\"25000\",17),
+    (default, \"Doggo Toothbrush\", \"Sikat gigi untuk doggy\",\"12500\",20);  
+  ";
+  $query_populate_members = "
+    insert into members values 
+    (default,\"Cheems\",\"Shiba Inu\",'f',\"084450923910\",\"Bruh St. 333\",\"2018-12-10 14:33:33\",default),
+    (default,\"Mew\",\"British Short Hair\",'f',\"083214653610\",\"Neverland Eve 21C\",\"2020-04-02 10:33:33\",default),
+    (default,\"Koma\",\"Ragdoll\",'f',\"081114561622\",\"Tiktik 123\",\"2021-02-01 08:33:33\",default),
+    (default,\"Jeruk\",\"Persian\",'m',\"088086651213\",\"Hachi 1Z\",\"2022-04-02 13:02:59\",default),
+    (default,\"Ben\",\"American Shorthair\",'m',\"0813082653211\",\"NY Street 12W\",\"2023-01-09 12:02:39\",default),
+    (default,\"Fanni\",\"Sphynx\",'m',\"0831080651235\",\"ROG 1513C\",\"2023-02-17 05:02:52\",default),
+    (default,\"Manis\",\"Sugar Glider\",'f',\"081187351903\",\"Ryme Town 2VE\",\"2018-01-07 07:11:40\",default),
+    (default,\"Zela\",\"Green sea turtle\",'m',\"08125457218\",\"Hachi 1Z\",\"2023-04-02 13:02:59\",default),
+    (default,\"Pela\",\"Softshell turtle\",'f',\"08535157209\",\"Aquala MZ2\",\"2023-01-01 23:02:59\",default),
+    (default,\"Si Boy\",\"Golden retriever\",'m',\"08518557912\",\"Hutan Mangrove A2\",\"2023-01-10 23:50:59\",default);
+  ";
+  $query_populate_groomings = "
+    insert into groomings values 
+    (default,2,default, curdate(), \"15:23\", 25000, false),
+    (default,5,default, curdate(), \"13:23\", 22000, true),
+    (default,3,default, curdate(), \"11:23\", 50000, false),
+    (default,1,default, curdate(), \"10:23\", 50000, true),
+    (default,1,default, \"2023-10-10\", \"10:23\", 20000, true),
+    (default,4,default, \"2023-09-10\", \"15:23\", 20000, true),
+    (default,5,default, \"2023-11-10\", \"10:00\", 40000, false),
+    (default,7,default, \"2023-11-10\", \"14:00\", 37000, false),
+    (default,9,default, \"2023-05-11\", \"10:20\", 67000, true);
+  ";
+  if (mysqli_query($link_populate, $query_populate_items) 
+    && mysqli_query($link_populate, $query_populate_members)
+    && mysqli_query($link_populate, $query_populate_groomings)
+    ) {
+    // header("location: debug.php");
+    return "success populate data";
   } else {
-    $submit_result = "sql error.";
+    return "cannot populate";
   }
 }
 
-// handle delete
-if (array_key_exists("deleteGrooming", $_POST)) {
-  handleDeleteGrooming($_POST["deleteGrooming"], $link);
-}
-
-function handleDeleteGrooming($id_delete, $link_delete) {
-  $query_delete_grooming = "delete from groomings where id=".$id_delete.";";
-  if (mysqli_query($link_delete, $query_delete_grooming)) {
-    header("location: grooming.php");
+// handle reset data
+if (array_key_exists("resetData", $_POST)) {
+  $query_set_0 = "
+    set foreign_key_checks = 0;
+  ";
+  $query_reset_items = "
+    truncate items;
+  ";
+  $query_reset_members = "
+    truncate members;
+  ";
+  $query_reset_groomings = "
+    truncate groomings;
+  ";
+  $query_reset_purchases = "
+    truncate purchases;
+  ";
+  $query_set_1 = "
+    set foreign_key_checks = 1;
+  ";
+  if (mysqli_query($link, $query_set_0) 
+    && mysqli_query($link, $query_reset_items) 
+    && mysqli_query($link, $query_reset_members)
+    && mysqli_query($link, $query_reset_groomings)
+    && mysqli_query($link, $query_reset_purchases)
+    && mysqli_query($link, $query_set_1) 
+    ) {
+    // header("location: debug.php");
+    $submit_result = "success delete data";
   } else {
-    $error = "cannot delete";
+    $error = "cannot populate";
   }
 }
-// handle pay
-if (array_key_exists("payGrooming", $_POST)) {
-  handlePayGrooming($_POST["payGrooming"], $link);
-}
-
-function handlePayGrooming($id_pay, $link_pay) {
-  $query_extend_member = "update groomings set is_paid = true where id=".$id_pay.";";
-  if (mysqli_query($link_pay, $query_extend_member)) {
-    header("location: grooming.php");
-  } else {
-    $error = "cannot pay"; 
-  }
-} 
-
-
 ?>
 
 
@@ -149,14 +127,15 @@ function handlePayGrooming($id_pay, $link_pay) {
         <a href="purchase.php" class="navbar-item">Purchase</a>
         <a href="membership.php" class="navbar-item">Membership</a>
         <a href="debug.php" class="navbar-debug navbar-on">Debug</a>
-
       </div>
       <a href="logout.php" class="navbar-item">Logout</a>
     </div>
   </div>
+  <?php echo $submit_result ?>
   <div>
-    <form>
-      
+    <form method="post">
+      <input class="netral-button" type="submit" name="populateData" value="Populate Data">
+      <input class="netral-button" type="submit" name="resetData" value="Reset Data">
     </form>
   </div>
 </body>
