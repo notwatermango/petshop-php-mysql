@@ -75,7 +75,7 @@ $error = "";
       <a href="logout.php" class="navbar-item">Logout</a>
     </div>
   </div>
-  <div class="flex">
+  <div class="flex body-container">
     <?php echo $error; ?>
     <div class="flex-40">
       <h2>purchases history</h2>
@@ -102,7 +102,7 @@ $error = "";
         </ul>
       </div>
     </div>
-    <div class="flex-40">
+    <div class="flex-30">
       <h2>today's groomings</h2>
       <div class="container-items flex-col overflow-auto h-100">
         <ul>
