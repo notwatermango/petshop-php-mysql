@@ -84,9 +84,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>admin login</h2>
     <?php echo $error; ?>
     <br>
-    <label>username</label>
+    <label>username (admin)</label>
     <input type="text" name="username" placeholder="admin"><br>
-    <label>password</label>
+    <label>password (admin)</label>
     <input type="password" name="password" placeholder="*****"><br> 
     <input type="submit" value="login">
   </form>

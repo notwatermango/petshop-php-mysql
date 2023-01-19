@@ -49,6 +49,25 @@ li {
   max-height: 80vh;
 }
 
+.h-10px {
+  height: 10px;
+}
+.h-10px {
+  height: 20px;
+}
+
+.mt-10px {
+  margin-top:10px;
+}
+
+.cg-10px {
+  column-gap: 10px;
+}
+
+.h-30px {
+  height: 30px;
+}
+
 .padding-10px {
   padding: 10px;
 }
